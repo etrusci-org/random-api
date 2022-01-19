@@ -1,3 +1,0 @@
-.read ./dev/database/schema.sql
-.read ./dev/database/dump/data-names.sql
-.read ./dev/database/dump/data-primes.sql
