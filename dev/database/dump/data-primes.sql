@@ -1,6 +1,6 @@
 -- data for table: primes
 -- val type: number
--- created on: 2022-01-19 16:20:35.814981 UTC
+-- created on: 2022-01-19 17:06:10.684960 UTC
 -- src: data-primes.txt
 -- out: data-primes.sql
 BEGIN TRANSACTION;

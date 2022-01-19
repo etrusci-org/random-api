@@ -1,6 +1,6 @@
 -- data for table: names
 -- val type: string
--- created on: 2022-01-19 16:20:35.785995 UTC
+-- created on: 2022-01-19 17:06:10.648820 UTC
 -- src: data-names.txt
 -- out: data-names.sql
 BEGIN TRANSACTION;
