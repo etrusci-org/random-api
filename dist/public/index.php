@@ -7,9 +7,9 @@
     <title>Test</title>
     <style>
         body { background: #000; color: #999; font-family: monospace, sans-serif; }
-        h1, h2 { color: #ccc; }
+        h1, h2, a { color: #ccc; }
         .randomness { cursor: pointer; font-weight: bold; color: #0a0; }
-        .randomness:hover { color: #0c0; }
+        .randomness:hover { color: #0e0; }
         .errors { color: #a00; }
     </style>
 </head>
@@ -21,12 +21,10 @@
     <h1>random-api</h1>
     <p>
         Work in progress.
-        <a data-uikey="apiEndpointPath">Endpoint is here</a>.
+        Endpoint is <a data-uikey="apiEndpointPath">here</a>.
     </p>
-
-    <h2>Randomness</h2>
     <p>
-        Random value of the moment. Click to refresh:
+        Random value of the moment (click to refresh):
     </p>
     <p>
         <span data-uikey="randomness">...</span>
