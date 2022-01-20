@@ -3,7 +3,7 @@
 
 test.php:
 
-    $Router = new GETRouter();
+    $Router = new WebRouter();
     $route = $Router->parse_route();
     var_dump($route);
 
@@ -15,8 +15,9 @@ test requests:
     - test.php?r=wee/yay:batman/spiderman/foo
 */
 
-class GETRouter
+class WebRouter
 {
+    public $requestSource = 'get+post';
     public $requestKey = 'r';
     public $defaultRoute = array(
         'time' => NULL,
@@ -31,8 +32,25 @@ class GETRouter
         $route = $this->defaultRoute;
         $route['time'] = microtime(TRUE);
 
+        switch ($this->requestSource) {
+            case 'get':
+                $requestData = $_GET;
+                break;
+
+            case 'post';
+                $requestData = $_POST;
+                break;
+
+            case 'get+post';
+                $requestData = array_merge($_GET, $_POST);
+                break;
+
+            default:
+                $requestData = $_GET;
+        }
+
         if (!$array) {
-            $request = array_key_exists($this->requestKey, $_GET) ? $_GET[$this->requestKey] : NULL;
+            $request = array_key_exists($this->requestKey, $requestData) ? $requestData[$this->requestKey] : NULL;
         }
         else {
             $request = array_key_exists($this->requestKey, $array) ? $array[$this->requestKey] : NULL;

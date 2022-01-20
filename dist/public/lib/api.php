@@ -12,8 +12,7 @@ class RandomAPI {
     protected $route = array();
     protected $clientHash = 'unknown';
     protected $response = array(
-        'time' => NULL,
-        'request' => NULL,
+        'route' => array(),
         'errors' => array(),
         'data' => array(),
     );
@@ -24,18 +23,20 @@ class RandomAPI {
 
         // Check/init database.
         $dbFile = realpath($this->conf['dbFile']);
-        if (!$dbFile)  {
+        if (!$dbFile || !is_file($dbFile))  {
             $this->response['errors'][] = 'Could not connect to database.';
             return;
         }
         $this->DB = new DatabaseSQLite3($dbFile);
 
         // Parse route.
-        $this->Router = new GETRouter();
+        $this->Router = new WebRouter();
         $this->route = $this->Router->parse_route();
+
         if (!$this->route['node']) {
-            $this->response['errors'][] = 'No node selected.';
-            return;
+            // $this->response['errors'][] = 'No node selected.';
+            // return;
+            $this->route = $this->Router->parse_route(array('r' => $this->conf['validNodes'][array_rand($this->conf['validNodes'])]));
         }
 
         // Check if node is valid.
@@ -51,15 +52,13 @@ class RandomAPI {
         }
 
         // If all good, process request.
+        $this->response['route'] = $this->route;
         $this->DB->open(TRUE);
         $this->processRequest();
         $this->DB->close();
     }
 
     public function processRequest() {
-        $this->response['time'] = microtime(TRUE);
-        $this->response['request'] = $this->route['request'];
-
         // Check when this clients request from today for rate limiting.
         $q = 'SELECT accessTime
               FROM sys_accesslog
@@ -122,14 +121,13 @@ class RandomAPI {
             array('limit', $count, SQLITE3_INTEGER),
         );
 
-        if ($count == 1) {
-            $r = $this->DB->querySingle($q, $v);
-        }
-        else {
-            $r = $this->DB->query($q, $v);
-        }
-
-        $this->DB->close();
+        // if ($count == 1) {
+        //     $r = $this->DB->querySingle($q, $v);
+        // }
+        // else {
+        //     $r = $this->DB->query($q, $v);
+        // }
+        $r = $this->DB->query($q, $v);
 
         if (!$r) {
             $this->response['errors'][] = 'Request returned no result.';
