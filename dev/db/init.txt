@@ -1,0 +1,3 @@
+.read dev/db/schema.sql
+.read dev/db/dump/data-names.sql
+.read dev/db/dump/data-primes.sql
