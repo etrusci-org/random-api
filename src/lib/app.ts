@@ -59,15 +59,15 @@ const App = {
         // @ts-ignore
         this.ui.randomness.addEventListener('click', () => { this.refreshRandomness() })
 
+        this.setUIValue('randomness', 'Loading...')
         this.setUIValue('apiEndpointPath', this.conf.apiEndpointPath, true, 'href')
-
-        this.setUIValue('randomness', 'loading...')
 
         this.refreshRandomness()
     },
 
     refreshRandomness() {
         this.setUIValue('errors', '')
+        this.setUIValue('randomness', 'Loading...')
 
         this.apiRequest('').then((response: apiResponseType) => {
             if (!response) {
@@ -76,6 +76,7 @@ const App = {
 
             if (response.errors.length > 0) {
                 this.setUIValue('errors', response.errors.join('<br>'))
+                this.setUIValue('randomness', ':-(')
                 console.error(response.errors)
                 return
             }

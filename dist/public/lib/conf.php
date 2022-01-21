@@ -10,11 +10,14 @@ $conf = array(
     'validNodes' => array(
         'names', # table: data_names
         'primes', # table: data_primes
+        'pseudohash16', # table: data_pseudohash16
+        'pseudohash32', # table: data_pseudohash32
+        'pseudohash64', # table: data_pseudohash64
     ),
 
     // Limit requests.
     'rateLimiting' => array(
-        'requestDelay' => 2.0, # {float}, seconds
-        'maxRequestsPerDay' => 300, # {int}
+        'requestDelay' => 1.0, # {float}, seconds
+        'maxRequestsPerDay' => 400, # {int}
     ),
 );

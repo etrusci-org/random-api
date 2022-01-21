@@ -1,3 +1,6 @@
 .read dev/db/schema.sql
-.read dev/db/dump/data-names.sql
-.read dev/db/dump/data-primes.sql
+.read dev/db/data/data_names.sql
+.read dev/db/data/data_primes.sql
+.read dev/db/data/data_pseudohash16.sql
+.read dev/db/data/data_pseudohash32.sql
+.read dev/db/data/data_pseudohash64.sql

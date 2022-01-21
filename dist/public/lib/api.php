@@ -12,7 +12,8 @@ class RandomAPI {
     protected $route = array();
     protected $clientHash = 'unknown';
     protected $response = array(
-        'route' => array(),
+        'time' => null,
+        'request' => null,
         'errors' => array(),
         'data' => array(),
     );
@@ -21,23 +22,16 @@ class RandomAPI {
         // Save conf for later use.
         $this->conf = $conf;
 
-        // Check/init database.
-        $dbFile = realpath($this->conf['dbFile']);
-        if (!$dbFile || !is_file($dbFile))  {
-            $this->response['errors'][] = 'Could not connect to database.';
-            return;
-        }
-        $this->DB = new DatabaseSQLite3($dbFile);
-
         // Parse route.
         $this->Router = new WebRouter();
         $this->route = $this->Router->parse_route();
-
         if (!$this->route['node']) {
             // $this->response['errors'][] = 'No node selected.';
             // return;
             $this->route = $this->Router->parse_route(array('r' => $this->conf['validNodes'][array_rand($this->conf['validNodes'])]));
         }
+        $this->response['time'] = $this->route['time'];
+        $this->response['request'] = $this->route['request'];
 
         // Check if node is valid.
         if (!in_array($this->route['node'], $this->conf['validNodes'])) {
@@ -51,8 +45,15 @@ class RandomAPI {
             $this->clientHash = hash('ripemd160', $clientIP);
         }
 
+        // Check/init database.
+        $dbFile = realpath($this->conf['dbFile']);
+        if (!$dbFile || !is_file($dbFile))  {
+            $this->response['errors'][] = 'Could not connect to database.';
+            return;
+        }
+        $this->DB = new DatabaseSQLite3($dbFile);
+
         // If all good, process request.
-        $this->response['route'] = $this->route;
         $this->DB->open(TRUE);
         $this->processRequest();
         $this->DB->close();
