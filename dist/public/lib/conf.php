@@ -18,6 +18,6 @@ $conf = array(
     // Limit requests.
     'rateLimiting' => array(
         'requestDelay' => 1.0, # {float}, seconds
-        'maxRequestsPerDay' => 500, # {int}
+        'maxRequestsPerDay' => 400, # {int}
     ),
 );

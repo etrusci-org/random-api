@@ -12,8 +12,8 @@ class RandomAPI {
     protected $route = array();
     protected $clientHash = 'unknown';
     protected $response = array(
-        'time' => null,
-        'request' => null,
+        'time' => NULL,
+        'request' => NULL,
         'errors' => array(),
         'data' => array(),
     );
@@ -26,8 +26,6 @@ class RandomAPI {
         $this->Router = new WebRouter();
         $this->route = $this->Router->parse_route();
         if (!$this->route['node']) {
-            // $this->response['errors'][] = 'No node selected.';
-            // return;
             $this->route = $this->Router->parse_route(array('r' => $this->conf['validNodes'][array_rand($this->conf['validNodes'])]));
         }
         $this->response['time'] = $this->route['time'];
@@ -60,7 +58,7 @@ class RandomAPI {
     }
 
     public function processRequest() {
-        // Check when this clients request from today for rate limiting.
+        // Get clients requests from today for rate limiting.
         $q = 'SELECT accessTime
               FROM sys_accesslog
               WHERE clientHash = :clientHash
@@ -93,6 +91,7 @@ class RandomAPI {
         );
         $this->DB->write($q, $v);
 
+        // If all good, get response data.
         $this->response['data'] = $this->getResponseData();
     }
 

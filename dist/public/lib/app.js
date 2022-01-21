@@ -29,7 +29,6 @@ const App = {
     main() {
         this.collectUIElements();
         this.ui.randomness.addEventListener('click', () => { this.refreshRandomness(); });
-        this.setUIValue('randomness', 'Loading...');
         this.setUIValue('apiEndpointPath', this.conf.apiEndpointPath, true, 'href');
         this.refreshRandomness();
     },
@@ -44,7 +43,11 @@ const App = {
                 console.error(response.errors);
                 return;
             }
-            this.setUIValue('randomness', response.data[0].val);
+            let node = response.request.split('/', 2)[0];
+            let id = response.data[0].id;
+            let val = response.data[0].val;
+            let output = `<p>${val}</p>\n<p><em>${node} id:${id}</em></p>`;
+            this.setUIValue('randomness', output);
         });
     },
     setUIValue(uikey, value = '', isAttribute = false, attribute = null) {

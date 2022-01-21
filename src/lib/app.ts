@@ -3,9 +3,10 @@ export { App }
 
 
 type apiResponseType = {
-    route: Object;
+    time: number;
+    request: string;
     errors: Array<string>;
-    data: Array<[id: number, val: string]>;
+    data: Array<{id: number, val: string|number}>;
 }
 
 // type responseHandler = (apiResponse: apiResponseType) => void
@@ -59,7 +60,6 @@ const App = {
         // @ts-ignore
         this.ui.randomness.addEventListener('click', () => { this.refreshRandomness() })
 
-        this.setUIValue('randomness', 'Loading...')
         this.setUIValue('apiEndpointPath', this.conf.apiEndpointPath, true, 'href')
 
         this.refreshRandomness()
@@ -79,12 +79,19 @@ const App = {
                 return
             }
 
+
+            let node = response.request.split('/', 2)[0]
             // @ts-ignore
-            this.setUIValue('randomness', response.data[0].val)
+            let id = response.data[0].id
+            // @ts-ignore
+            let val = response.data[0].val
+
+            let output = `<p>${val}</p>\n<p><em>${node} id:${id}</em></p>`
+            this.setUIValue('randomness', output)
         })
     },
 
-    setUIValue(uikey: string, value: string = '', isAttribute: boolean = false, attribute: string|null = null) {
+    setUIValue(uikey: string, value: string|number = '', isAttribute: boolean = false, attribute: string|null = null) {
         if (!uikey) {
             return
         }

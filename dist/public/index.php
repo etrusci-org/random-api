@@ -26,10 +26,10 @@
     <p>
         Random value of the moment (click to refresh):
     </p>
-    <p>
-        <span data-uikey="randomness">...</span>
-    </p>
-    <p data-uikey="errors"></p>
+
+    <div data-uikey="randomness"></div>
+
+    <div data-uikey="errors"></div>
 
     <hr>
 
