@@ -67,7 +67,6 @@ const App = {
 
     refreshRandomness() {
         this.setUIValue('errors', '')
-        this.setUIValue('randomness', 'Loading...')
 
         this.apiRequest('').then((response: apiResponseType) => {
             if (!response) {
@@ -76,7 +75,6 @@ const App = {
 
             if (response.errors.length > 0) {
                 this.setUIValue('errors', response.errors.join('<br>'))
-                this.setUIValue('randomness', ':-(')
                 console.error(response.errors)
                 return
             }
