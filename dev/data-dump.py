@@ -9,6 +9,7 @@ TABLES = {
     'data_pseudohash16': 'string',
     'data_pseudohash32': 'string',
     'data_pseudohash64': 'string',
+    'data_triangulars': 'number',
 }
 
 

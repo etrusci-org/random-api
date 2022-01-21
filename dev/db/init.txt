@@ -4,3 +4,4 @@
 .read dev/db/data/data_pseudohash16.sql
 .read dev/db/data/data_pseudohash32.sql
 .read dev/db/data/data_pseudohash64.sql
+.read dev/db/data/data_triangulars.sql

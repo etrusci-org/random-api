@@ -13,6 +13,7 @@ $conf = array(
         'pseudohash16', # table: data_pseudohash16
         'pseudohash32', # table: data_pseudohash32
         'pseudohash64', # table: data_pseudohash64
+        'triangulars', # table: data_triangulars
     ),
 
     // Limit requests.

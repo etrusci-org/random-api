@@ -46,6 +46,12 @@ CREATE TABLE data_pseudohash64 (
     val  TEXT     NOT NULL UNIQUE
 );
 
+-- Data source for triangulars.
+DROP TABLE IF EXISTS data_triangulars;
+CREATE TABLE data_triangulars (
+    id   INTEGER  PRIMARY KEY AUTOINCREMENT,
+    val  INTEGER  NOT NULL UNIQUE
+);
 
 
 COMMIT;
