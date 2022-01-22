@@ -58,11 +58,15 @@ const App = {
         this.collectUIElements()
 
         // @ts-ignore
-        this.ui.randomness.addEventListener('click', () => { this.refreshRandomness() })
+        // this.ui.randomness.addEventListener('click', () => { this.refreshRandomness() })
+        document.querySelector('main').addEventListener('click', () => { this.refreshRandomness() })
 
         this.setUIValue('apiEndpointPath', this.conf.apiEndpointPath, true, 'href')
 
         this.refreshRandomness()
+
+        // @ts-ignore
+        document.querySelector('main').style.display = 'block'
     },
 
     refreshRandomness() {
@@ -86,8 +90,7 @@ const App = {
             // @ts-ignore
             let val = response.data[0].val
 
-            let output = `<p>${val}</p>\n<p><em>${node} id:${id}</em></p>`
-            this.setUIValue('randomness', output)
+            this.setUIValue('randomness', `${val} <div class="info">node: ${node}</div>`)
         })
     },
 

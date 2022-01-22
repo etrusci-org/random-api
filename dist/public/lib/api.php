@@ -62,7 +62,7 @@ class RandomAPI {
         $q = 'SELECT accessTime
               FROM sys_accesslog
               WHERE clientHash = :clientHash
-              AND accessTime >= strftime(\'%s\', \'now\', \'-86400 seconds\')
+              AND accessTime >= strftime("%s", "now", "-86400 seconds")
               ORDER BY id DESC;';
         $v = array(
             array('clientHash', $this->clientHash, SQLITE3_TEXT),

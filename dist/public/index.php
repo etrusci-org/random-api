@@ -4,34 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
-    <style>
-        body { background: #000; color: #999; font-family: monospace, sans-serif; }
-        h1, h2, a { color: #ccc; }
-        .randomness { cursor: pointer; font-weight: bold; color: #0a0; }
-        .randomness:hover { color: #0e0; }
-        .errors { color: #a00; }
-    </style>
+    <link rel="stylesheet" href="res/theme1.css">
+    <title>random</title>
 </head>
 <body>
-
     <noscript>This app needs JavaScript to work.</noscript>
 
+    <main>
 
-    <h1>random-api</h1>
-    <p>
-        Work in progress.
-        Endpoint is <a data-uikey="apiEndpointPath">here</a>.
-    </p>
-    <p>
-        Random value of the moment (click to refresh):
-    </p>
+        <div data-uikey="randomness">. . .</div>
 
-    <div data-uikey="randomness"></div>
+        <div data-uikey="errors"></div>
 
-    <div data-uikey="errors"></div>
-
-    <hr>
+        <footer>
+            <p>
+                (click <span class="hilite">value</span> to refresh)
+            </p>
+            <p>
+                <a href="https://github.com/etrusci-org/random-api/blob/main/README.md">Docs</a>
+                &middot; <a data-uikey="apiEndpointPath">API Endpoint</a>
+            </p>
+        </footer>
+    </main>
 
     <script src="./lib/main.js" type="module"></script>
 </body>

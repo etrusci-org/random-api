@@ -28,9 +28,10 @@ const App = {
     },
     main() {
         this.collectUIElements();
-        this.ui.randomness.addEventListener('click', () => { this.refreshRandomness(); });
+        document.querySelector('main').addEventListener('click', () => { this.refreshRandomness(); });
         this.setUIValue('apiEndpointPath', this.conf.apiEndpointPath, true, 'href');
         this.refreshRandomness();
+        document.querySelector('main').style.display = 'block';
     },
     refreshRandomness() {
         this.setUIValue('errors', '');
@@ -46,8 +47,7 @@ const App = {
             let node = response.request.split('/', 2)[0];
             let id = response.data[0].id;
             let val = response.data[0].val;
-            let output = `<p>${val}</p>\n<p><em>${node} id:${id}</em></p>`;
-            this.setUIValue('randomness', output);
+            this.setUIValue('randomness', `${val} <div class="info">node: ${node}</div>`);
         });
     },
     setUIValue(uikey, value = '', isAttribute = false, attribute = null) {
