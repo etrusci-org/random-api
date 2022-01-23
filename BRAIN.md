@@ -6,6 +6,8 @@ To-Do and ideas in no particular order.
 
 ## To-Do
 
+- Fix @ts-ignore's aka learn more TypeScript ;-)
+
 ---
 
 ## Idea

@@ -5,6 +5,7 @@ const App = {
     conf: {
         apiEndpointPath: './api.php',
     },
+
     ui: {},
 
     main() {
