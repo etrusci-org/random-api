@@ -79,6 +79,8 @@ api.php?r=pseudohashes16/count:3
 
 **Flags** are single values that can toggle something on or off.
 
+Available:
+
 - **noid:** Omit the `id` value from the response data.
 
 Example:
