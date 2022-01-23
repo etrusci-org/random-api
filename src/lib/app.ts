@@ -64,13 +64,10 @@ const App = {
         this.setUIValue('apiEndpointPath', this.conf.apiEndpointPath, true, 'href')
 
         this.refreshRandomness()
-
-        // @ts-ignore
-        document.querySelector('main').style.display = 'block'
     },
 
     refreshRandomness() {
-        this.setUIValue('errors', '')
+        // this.setUIValue('errors', '')
 
         this.apiRequest('').then((response: apiResponseType) => {
             if (!response) {
@@ -78,19 +75,18 @@ const App = {
             }
 
             if (response.errors.length > 0) {
-                this.setUIValue('errors', response.errors.join('<br>'))
-                console.error(response.errors)
+                this.setUIValue('randomness', `<span class="errors" title="error">${response.errors.join('<br>')}</span>`)
+                console.error('respone errors:', response.errors)
                 return
             }
 
-
-            let node = response.request.split('/', 2)[0]
+            // let node = response.request.split('/', 2)[0]
             // @ts-ignore
-            let id = response.data[0].id
+            // let id = response.data[0].id
             // @ts-ignore
             let val = response.data[0].val
 
-            this.setUIValue('randomness', `${val} <div class="info">node: ${node}</div>`)
+            this.setUIValue('randomness', val)
         })
     },
 

@@ -1,18 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
 
-* {
+html,
+body {
     margin: 0;
     padding: 0;
 }
 
+html,
 body {
     font-size: 16px;
     font-family: 'Inconsolata', monospace;
     font-weight: 400;
     color: #fff;
     background-color: #000;
-    padding: 20px;
     line-height: 1.4;
+
+    height: 100%;
 }
 
 a:link, a:visited {
@@ -25,15 +28,17 @@ a:hover, a:focus, a:active {
     text-decoration: none;
 }
 
-p {
-    margin-bottom: 5px;
-}
-
 main {
-    display: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 .randomness {
+    width: 90%;
+    overflow-wrap: break-word;
     color: #2fdaaf;
     font-size: 26px;
     cursor: pointer;
@@ -53,11 +58,10 @@ main {
 
 .errors {
     color: #da652f;
-    margin-top: 20px;
-    text-align: center;
 }
 
 footer {
+    font-size: 14px;
     position: fixed;
     right: 20px;
     bottom: 20px;

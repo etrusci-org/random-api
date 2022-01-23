@@ -11,21 +11,13 @@
     <noscript>This app needs JavaScript to work.</noscript>
 
     <main>
-
         <div data-uikey="randomness">. . .</div>
-
-        <div data-uikey="errors"></div>
-
-        <footer>
-            <p>
-                (click <span class="hilite">value</span> to refresh)
-            </p>
-            <p>
-                <a href="https://github.com/etrusci-org/random-api/blob/main/README.md">Docs</a>
-                &middot; <a data-uikey="apiEndpointPath">API Endpoint</a>
-            </p>
-        </footer>
     </main>
+
+    <footer>
+        <a href="https://github.com/etrusci-org/random-api/blob/main/README.md">Docs</a>
+        &middot; <a data-uikey="apiEndpointPath">API Endpoint</a>
+    </footer>
 
     <script src="./lib/main.js" type="module"></script>
 </body>

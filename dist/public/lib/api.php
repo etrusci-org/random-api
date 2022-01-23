@@ -62,7 +62,8 @@ class RandomAPI {
         $q = 'SELECT accessTime
               FROM sys_accesslog
               WHERE clientHash = :clientHash
-              AND accessTime >= strftime("%s", "now", "-86400 seconds")
+              --AND accessTime >= strftime("%s", "now", "-86400 seconds")
+              AND accessTime >= strftime("%s", "now", "-60 seconds")
               ORDER BY id DESC;';
         $v = array(
             array('clientHash', $this->clientHash, SQLITE3_TEXT),
@@ -70,14 +71,15 @@ class RandomAPI {
         $r = $this->DB->query($q, $v);
 
         // Stop if rate limit request per day applies.
-        if (count($r) >= $this->conf['rateLimiting']['maxRequestsPerDay']) {
-            $this->response['errors'][] = sprintf('Maximum %s requests per 24 hours.', $this->conf['rateLimiting']['maxRequestsPerDay']);
+        if (count($r) >= $this->conf['rateLimiting']['maxRequestsPerMinute']) {
+            // $this->response['errors'][] = sprintf('Maximum %s requests per 24 hours.', $this->conf['rateLimiting']['maxRequestsPerDay']);
+            $this->response['errors'][] = sprintf('Rate limiting: Maximum %s requests in 60 seconds', $this->conf['rateLimiting']['maxRequestsPerMinute']);
             return;
         }
 
         // Stop if rate limit delay applies.
         if (isset($r[0]) && isset($r[0]['accessTime']) && time() - $r[0]['accessTime'] < $this->conf['rateLimiting']['requestDelay']) {
-            $this->response['errors'][] = sprintf('Minimum %ss delay between requests.', $this->conf['rateLimiting']['requestDelay']);
+            $this->response['errors'][] = sprintf('Rate limiting: Maximum 1 request every %ss', $this->conf['rateLimiting']['requestDelay']);
             return;
         }
 
