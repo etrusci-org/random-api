@@ -2,7 +2,7 @@
 
 Retrieve curated random data.
 
-If you just want to read some random data, go to <https://etrusci.org/random>. For accessing the API programmatically, read the [Usage](#usage) section.
+If you just want to read some random data, go to <https://etrusci.org/tool/random-api>. For accessing the API programmatically, read the [Usage](#usage) section.
 
 ---
 
@@ -25,7 +25,7 @@ If you just want to read some random data, go to <https://etrusci.org/random>. F
 Every request begins with this URL. By default this returns one random item from a random **node**. You can send requests as both `GET` or `POST`.
 
 ```text
-https://etrusci.org/random/api.php?r=
+https://etrusci.org/tool/random-api/api.php?r=
 ```
 
 For simplicity, this is shortened to just `api.php?r=` in the following texts.
