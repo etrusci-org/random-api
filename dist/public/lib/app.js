@@ -1,9 +1,47 @@
-import { conf } from './conf.js';
 export { App };
 const App = {
-    conf: conf,
+    conf: {
+        apiEndpointPath: './api.php',
+    },
     ui: {},
-    apiRequest(request) {
+    main() {
+        this.collectUIElements();
+        this.ui['main'].addEventListener('click', () => { this.refreshRandomItem(); });
+        this.ui['main'].style.display = 'flex';
+        this.refreshRandomItem();
+    },
+    collectUIElements() {
+        let elements = document.querySelectorAll('[data-uikey]');
+        elements.forEach(element => {
+            if (element instanceof HTMLElement) {
+                let uikey = element.dataset['uikey'];
+                if (uikey) {
+                    element.classList.add('ui', uikey);
+                    this.ui[uikey] = element;
+                }
+            }
+        });
+    },
+    refreshRandomItem() {
+        this.ui['errors'].innerHTML = '';
+        this.ui['errors'].style.display = 'none';
+        this.apiRequest().then((response) => {
+            if (!response) {
+                return;
+            }
+            if (response.errors.length > 0) {
+                console.error('API respone errors:', response.errors);
+                this.ui['errors'].innerHTML = response.errors.join('<br>');
+                this.ui['errors'].style.display = 'block';
+                return;
+            }
+            let request = response.request;
+            let val = response.data[0].val;
+            this.ui['random-item'].innerHTML = val;
+            this.ui['random-item-info'].innerHTML = `&lt;${request}&gt;`;
+        });
+    },
+    apiRequest(request = '') {
         const requestData = new FormData();
         requestData.append('r', request);
         return fetch(this.conf.apiEndpointPath, {
@@ -12,55 +50,13 @@ const App = {
         })
             .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not OK');
+                throw new Error('API network response was not OK');
             }
             return response.json();
         })
             .catch(error => {
-            console.error('apiRequest Error:', error);
+            console.error('API request error:', error);
+            this.ui['errors'].innerHTML = `API error: ${error}`;
         });
-    },
-    collectUIElements() {
-        document.querySelectorAll('[data-uikey]').forEach(ele => {
-            this.ui[ele.dataset.uikey] = ele;
-            ele.classList.add('ui', ele.dataset.uikey);
-        });
-    },
-    main() {
-        this.collectUIElements();
-        document.querySelector('main').addEventListener('click', () => { this.refreshRandomness(); });
-        this.setUIValue('apiEndpointPath', this.conf.apiEndpointPath, true, 'href');
-        this.refreshRandomness();
-    },
-    refreshRandomness() {
-        this.apiRequest('').then((response) => {
-            if (!response) {
-                return;
-            }
-            if (response.errors.length > 0) {
-                this.setUIValue('randomness', `<span class="errors" title="error">${response.errors.join('<br>')}</span>`);
-                console.error('respone errors:', response.errors);
-                return;
-            }
-            let val = response.data[0].val;
-            this.setUIValue('randomness', val);
-        });
-    },
-    setUIValue(uikey, value = '', isAttribute = false, attribute = null) {
-        if (!uikey) {
-            return;
-        }
-        if (!this.ui[uikey]) {
-            console.warn(`Element "${uikey}" not found.`);
-            return;
-        }
-        if (!isAttribute) {
-            this.ui[uikey].innerHTML = value;
-        }
-        else {
-            if (attribute) {
-                this.ui[uikey].setAttribute(attribute, value);
-            }
-        }
     },
 };

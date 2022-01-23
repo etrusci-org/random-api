@@ -1,22 +1,5 @@
 <?php
-/* Usage:
-
-test.php:
-
-    $Router = new WebRouter();
-    $route = $Router->parse_route();
-    var_dump($route);
-
-test requests:
-
-    - test.php
-    - test.php?r=foo/bar
-    - test.php?r=foo/moo:cow
-    - test.php?r=wee/yay:batman/spiderman/foo
-*/
-
-class WebRouter
-{
+class WebRouter {
     public $requestSource = 'get+post';
     public $requestKey = 'r';
     public $defaultRoute = array(
@@ -27,8 +10,7 @@ class WebRouter
         'flag' => array(),
     );
 
-
-    public function parse_route($array=NULL, $sort=TRUE) {
+    public function parseRoute($array=NULL, $sort=TRUE) {
         $route = $this->defaultRoute;
         $route['time'] = time();
 

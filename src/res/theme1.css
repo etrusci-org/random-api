@@ -1,0 +1,102 @@
+/* Import */
+
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\ Reset */
+
+html,
+body,
+div {
+    margin: 0;
+    padding: 0;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\ Font */
+
+body {
+    font-family: sans-serif;
+    font-size: 1rem;
+    font-family: 'Inconsolata', monospace;
+    font-weight: 400;
+}
+
+div.random-item {
+    font-size: 5rem;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\ Layout */
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+    h1 {
+        display: none;
+    }
+
+    main {
+        height: 100%;
+        display: none; /* will be set to 'flex' in App.main */
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+        div.random-item-wrap {
+            width: 100%;
+            overflow-wrap: break-word;
+            text-align: center;
+        }
+
+            div.errors {
+                display: none;
+                padding: 2rem 2rem .5rem 2rem;
+            }
+
+            div.random-item {
+                padding: 0 2rem .5rem 2rem;
+            }
+
+            div.random-item-info {
+                padding: 0 2rem 2rem 2rem;
+            }
+
+    footer {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        text-align: right;
+    }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\ Color */
+
+body {
+    color: #666666;
+    background-color: #000;
+}
+
+a:link, a:visited {
+    color: #666666;
+    text-decoration: underline;
+}
+
+a:hover, a:focus, a:active {
+    color: #2fdaaf;
+    text-decoration: none;
+}
+
+div.errors {
+    color: #da652f;
+}
+
+div.random-item {
+    color: #2fdaaf;
+}

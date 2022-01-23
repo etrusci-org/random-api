@@ -1,31 +1,16 @@
 <?php
-
-/**
- * SQLite3 Database class
- */
 class DatabaseSQLite3 {
     protected $dbFile;
     protected $db;
     protected $encryptionKey;
     protected $sqliteVersion;
 
-    /**
-     * Class constructor.
-     * @param string $dbFile  Database file path.
-     * @param string $encryptionKey  Optional encryption key.
-     * @return void
-     */
     public function __construct($dbFile, $encryptionKey='') {
         $this->dbFile = $dbFile;
         $this->encryptionKey = $encryptionKey;
         $this->sqliteVersion = SQLite3::version();
     }
 
-    /**
-     * Open database for usage.
-     * @param boolean $rw  Whether to open the database in READWRITE mode.
-     * @return void
-     */
     public function open($rw=FALSE) {
         if (is_object($this->db)) return $this->db;
 
@@ -34,22 +19,12 @@ class DatabaseSQLite3 {
         $this->db = new SQLite3($this->dbFile, $flag, $this->encryptionKey);
     }
 
-    /**
-     * Close database.
-     * @return void
-     */
     public function close() {
         if (!is_object($this->db)) return FALSE;
 
         $this->db->close();
     }
 
-    /**
-     * Query the database.
-     * @param string $query  Query to execute.
-     * @param array $values  Query values.
-     * @return array  Query results.
-     */
     public function query($query, $values=array()) {
         if (!is_object($this->db)) return FALSE;
 
@@ -70,12 +45,6 @@ class DatabaseSQLite3 {
         return $dump;
     }
 
-    /**
-     * Query the database for a single row.
-     * @param string $query  Query to execute.
-     * @param array $values  Query values.
-     * @return array  Query result.
-     */
     public function querySingle($query, $values=array()) {
         if (!is_object($this->db)) return FALSE;
 
@@ -88,12 +57,6 @@ class DatabaseSQLite3 {
         return $result[0];
     }
 
-    /**
-     * Write changes to the database.
-     * @param mixed $query  Query to execute.
-     * @param mixed $values  Query values.
-     * @return boolean  Whether the query was executed successfully.
-     */
     public function write($query, $values=array()) {
         if (!is_object($this->db)) return FALSE;
 

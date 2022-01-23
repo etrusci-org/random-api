@@ -6,9 +6,9 @@ TABLES = {
     # table: val type
     'data_names': 'string',
     'data_primes': 'number',
-    'data_pseudohash16': 'string',
-    'data_pseudohash32': 'string',
-    'data_pseudohash64': 'string',
+    'data_pseudohashes16': 'string',
+    'data_pseudohashes32': 'string',
+    'data_pseudohashes64': 'string',
     'data_triangulars': 'number',
 }
 

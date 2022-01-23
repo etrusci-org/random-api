@@ -26,22 +26,22 @@ CREATE TABLE data_primes (
 );
 
 -- Data source for pseudo hashes of length 16.
-DROP TABLE IF EXISTS data_pseudohash16;
-CREATE TABLE data_pseudohash16 (
+DROP TABLE IF EXISTS data_pseudohashes16;
+CREATE TABLE data_pseudohashes16 (
     id   INTEGER  PRIMARY KEY AUTOINCREMENT,
     val  TEXT     NOT NULL UNIQUE
 );
 
 -- Data source for pseudo hashes of length 32.
-DROP TABLE IF EXISTS data_pseudohash32;
-CREATE TABLE data_pseudohash32 (
+DROP TABLE IF EXISTS data_pseudohashes32;
+CREATE TABLE data_pseudohashes32 (
     id   INTEGER  PRIMARY KEY AUTOINCREMENT,
     val  TEXT     NOT NULL UNIQUE
 );
 
 -- Data source for pseudo hashes of length 64.
-DROP TABLE IF EXISTS data_pseudohash64;
-CREATE TABLE data_pseudohash64 (
+DROP TABLE IF EXISTS data_pseudohashes64;
+CREATE TABLE data_pseudohashes64 (
     id   INTEGER  PRIMARY KEY AUTOINCREMENT,
     val  TEXT     NOT NULL UNIQUE
 );

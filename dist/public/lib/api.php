@@ -12,6 +12,7 @@ class RandomAPI {
     protected $route = array();
     protected $clientHash = 'unknown';
     protected $response = array(
+        'version' => API_VERSION,
         'time' => NULL,
         'request' => NULL,
         'errors' => array(),
@@ -24,9 +25,9 @@ class RandomAPI {
 
         // Parse route.
         $this->Router = new WebRouter();
-        $this->route = $this->Router->parse_route();
+        $this->route = $this->Router->parseRoute();
         if (!$this->route['node']) {
-            $this->route = $this->Router->parse_route(array('r' => $this->conf['validNodes'][array_rand($this->conf['validNodes'])]));
+            $this->route = $this->Router->parseRoute(array('r' => $this->conf['validNodes'][array_rand($this->conf['validNodes'])]));
         }
         $this->response['time'] = $this->route['time'];
         $this->response['request'] = $this->route['request'];
@@ -58,34 +59,32 @@ class RandomAPI {
     }
 
     public function processRequest() {
-        // Get clients requests from today for rate limiting.
-        $q = 'SELECT accessTime
-              FROM sys_accesslog
-              WHERE clientHash = :clientHash
-              --AND accessTime >= strftime("%s", "now", "-86400 seconds")
-              AND accessTime >= strftime("%s", "now", "-60 seconds")
-              ORDER BY id DESC;';
+        // Get clients recent requests for rate limiting.
+        $q = sprintf('SELECT accessTime
+        FROM sys_accesslog
+        WHERE clientHash = :clientHash
+        AND accessTime >= strftime("%%s", "now", "-%s seconds")
+        ORDER BY id DESC;', $this->conf['rateLimiting']['intervalMaximum']['interval']);
         $v = array(
             array('clientHash', $this->clientHash, SQLITE3_TEXT),
         );
         $r = $this->DB->query($q, $v);
 
-        // Stop if rate limit request per day applies.
-        if (count($r) >= $this->conf['rateLimiting']['maxRequestsPerMinute']) {
-            // $this->response['errors'][] = sprintf('Maximum %s requests per 24 hours.', $this->conf['rateLimiting']['maxRequestsPerDay']);
-            $this->response['errors'][] = sprintf('Rate limiting: Maximum %s requests in 60 seconds', $this->conf['rateLimiting']['maxRequestsPerMinute']);
+        // Stop if rate interval limit applies.
+        if (count($r) >= $this->conf['rateLimiting']['intervalMaximum']['requests']) {
+            $this->response['errors'][] = sprintf('Rate limit: Maximum %d requests per %g seconds.', $this->conf['rateLimiting']['intervalMaximum']['requests'], $this->conf['rateLimiting']['intervalMaximum']['interval']);
             return;
         }
 
         // Stop if rate limit delay applies.
-        if (isset($r[0]) && isset($r[0]['accessTime']) && time() - $r[0]['accessTime'] < $this->conf['rateLimiting']['requestDelay']) {
-            $this->response['errors'][] = sprintf('Rate limiting: Maximum 1 request every %ss', $this->conf['rateLimiting']['requestDelay']);
+        if (isset($r[0]) && time() - $r[0]['accessTime'] < $this->conf['rateLimiting']['requestDelay']) {
+            $this->response['errors'][] = sprintf('Rate limit: Minimum %g second delay between requests.', $this->conf['rateLimiting']['requestDelay']);
             return;
         }
 
         // Log access and return response data if rate limit does not apply.
         $q = 'INSERT INTO sys_accesslog (accessTime, clientHash, apiRequest)
-              VALUES (:accessTime, :clientHash, :apiRequest);';
+        VALUES (:accessTime, :clientHash, :apiRequest);';
         $v = array(
             array('accessTime', time(), SQLITE3_INTEGER),
             array('clientHash', $this->clientHash, SQLITE3_TEXT),

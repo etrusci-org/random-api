@@ -1,22 +1,69 @@
-import { conf } from './conf.js'
 export { App }
 
 
-type apiResponseType = {
-    time: number;
-    request: string;
-    errors: Array<string>;
-    data: Array<{id: number, val: string|number}>;
-}
-
-// type responseHandler = (apiResponse: apiResponseType) => void
-
-
 const App = {
-    conf: conf,
+    conf: {
+        apiEndpointPath: './api.php',
+    },
     ui: {},
 
-    apiRequest(request: string, /* responseHandler: responseHandler|null = null */) {
+    main() {
+        this.collectUIElements()
+
+        // @ts-ignore
+        this.ui['main'].addEventListener('click', () => { this.refreshRandomItem() })
+
+        // @ts-ignore
+        this.ui['main'].style.display = 'flex'
+        this.refreshRandomItem()
+    },
+
+    collectUIElements() {
+        let elements = document.querySelectorAll('[data-uikey]')
+        elements.forEach(element => {
+            if (element instanceof HTMLElement) {
+                let uikey = element.dataset['uikey']
+                if (uikey) {
+                    element.classList.add('ui', uikey)
+                    // @ts-ignore
+                    this.ui[uikey] = element
+                }
+            }
+        })
+    },
+
+    refreshRandomItem() {
+        // @ts-ignore
+        this.ui['errors'].innerHTML = ''
+        // @ts-ignore
+        this.ui['errors'].style.display = 'none'
+
+        this.apiRequest().then((response) => {
+            if (!response) {
+                return
+            }
+
+            if (response.errors.length > 0) {
+                console.error('API respone errors:', response.errors)
+                // @ts-ignore
+                this.ui['errors'].innerHTML = response.errors.join('<br>')
+                // @ts-ignore
+                this.ui['errors'].style.display = 'block'
+                return
+            }
+
+            let request = response.request
+            let val = response.data[0].val
+
+            // @ts-ignore
+            this.ui['random-item'].innerHTML = val
+
+            // @ts-ignore
+            this.ui['random-item-info'].innerHTML = `&lt;${request}&gt;`
+        })
+    },
+
+    apiRequest(request: string = '') {
         // Prepare request data.
         const requestData = new FormData()
         requestData.append('r', request)
@@ -29,87 +76,15 @@ const App = {
         // Process the response.
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not OK')
+                throw new Error('API network response was not OK')
             }
             return response.json()
         })
-        // // Pass the response to the onSuccess handler function.
-        // .then(responseData => {
-        //     if (typeof(responseHandler) == 'function') {
-        //         responseHandler(responseData)
-        //     }
-        // })
         // Sad times.
         .catch(error => {
-            console.error('apiRequest Error:', error)
+            console.error('API request error:', error)
+            // @ts-ignore
+            this.ui['errors'].innerHTML = `API error: ${error}`
         })
-    },
-
-    collectUIElements() {
-        document.querySelectorAll('[data-uikey]').forEach(ele => {
-            // @ts-ignore
-            this.ui[ele.dataset.uikey] = ele
-            // @ts-ignore
-            ele.classList.add('ui', ele.dataset.uikey)
-        })
-    },
-
-    main() {
-        this.collectUIElements()
-
-        // @ts-ignore
-        // this.ui.randomness.addEventListener('click', () => { this.refreshRandomness() })
-        document.querySelector('main').addEventListener('click', () => { this.refreshRandomness() })
-
-        this.setUIValue('apiEndpointPath', this.conf.apiEndpointPath, true, 'href')
-
-        this.refreshRandomness()
-    },
-
-    refreshRandomness() {
-        // this.setUIValue('errors', '')
-
-        this.apiRequest('').then((response: apiResponseType) => {
-            if (!response) {
-                return
-            }
-
-            if (response.errors.length > 0) {
-                this.setUIValue('randomness', `<span class="errors" title="error">${response.errors.join('<br>')}</span>`)
-                console.error('respone errors:', response.errors)
-                return
-            }
-
-            // let node = response.request.split('/', 2)[0]
-            // @ts-ignore
-            // let id = response.data[0].id
-            // @ts-ignore
-            let val = response.data[0].val
-
-            this.setUIValue('randomness', val)
-        })
-    },
-
-    setUIValue(uikey: string, value: string|number = '', isAttribute: boolean = false, attribute: string|null = null) {
-        if (!uikey) {
-            return
-        }
-
-        // @ts-ignore
-        if (!this.ui[uikey]) {
-            console.warn(`Element "${uikey}" not found.`)
-            return
-        }
-
-        if (!isAttribute) {
-            // @ts-ignore
-            this.ui[uikey].innerHTML = value
-        }
-        else {
-            if (attribute) {
-                // @ts-ignore
-                this.ui[uikey].setAttribute(attribute, value)
-            }
-        }
     },
 }

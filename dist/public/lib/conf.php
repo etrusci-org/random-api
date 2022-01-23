@@ -1,25 +1,28 @@
 <?php
+error_reporting(0);
+
+define('API_VERSION', '1.0.0');
+
 $conf = array(
     // Whether to output in plain text with additional info.
     'debugApi' => FALSE,
 
-    // Absolute path to db file. On init realpath() will be applied.
+    // Path to db file. On init realpath() will be applied.
     'dbFile' => __DIR__.'/../../protected/data/db.sqlite3',
 
     // Valid API route nodes.
     'validNodes' => array(
         'names', # table: data_names
         'primes', # table: data_primes
-        'pseudohash16', # table: data_pseudohash16
-        'pseudohash32', # table: data_pseudohash32
-        'pseudohash64', # table: data_pseudohash64
+        'pseudohashes16', # table: data_pseudohashes16
+        'pseudohashes32', # table: data_pseudohashes32
+        'pseudohashes64', # table: data_pseudohashes64
         'triangulars', # table: data_triangulars
     ),
 
-    // Limit requests.
+    // Limit access rates.
     'rateLimiting' => array(
-        'requestDelay' => 1.0, # {float}, seconds
-        'maxRequestsPerDay' => 600, # {int}
-        'maxRequestsPerMinute' => 10, # {int}
+        'intervalMaximum' => array('requests' => 100, 'interval' => 3600),
+        'requestDelay' => 1,
     ),
 );

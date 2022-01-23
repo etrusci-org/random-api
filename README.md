@@ -1,10 +1,26 @@
 # random-api
 
-Work in progress.
+Retrieve curated random data.
+
+If you just want to read some random data, go to <https://etrusci.org/random>. For accessing the API programmatically, read the [Usage](#usage) section.
 
 ---
 
-## Endpoint
+- [Usage](#usage)
+  - [Endpoint](#endpoint)
+  - [Request Syntax](#request-syntax)
+  - [Nodes](#nodes)
+  - [Vars](#vars)
+  - [Flags](#flags)
+  - [Response](#response)
+  - [Rate Limits](#rate-limits)
+- [License](#license)
+
+---
+
+## Usage
+
+### Endpoint
 
 Every request begins with this URL. By default this returns one random item from a random **node**. You can send requests as both `GET` or `POST`.
 
@@ -12,7 +28,7 @@ Every request begins with this URL. By default this returns one random item from
 https://etrusci.org/random/api.php?r=
 ```
 
-## Usage
+For simplicity, this is shortened to just `api.php?r=` in the following texts.
 
 ### Request Syntax
 
@@ -30,15 +46,17 @@ Available:
 
 - **names:** Entity names.
 - **primes:** Prime numbers.
-- **pseudohash16:** Pseudo hashes of length 16.
-- **pseudohash32:** Pseudo hashes of length 32.
-- **pseudohash64:** Pseudo hashes of length 64.
+- **pseudohashes16:** Pseudo hashes of length 16.
+- **pseudohashes32:** Pseudo hashes of length 32.
+- **pseudohashes64:** Pseudo hashes of length 64.
 - **triangulars:** Triangular numbers.
 
-Example:
+Examples:
 
 ```text
 api.php?r=names
+api.php?r=primes
+api.php?r=pseudohashes16
 ```
 
 ### Vars
@@ -49,10 +67,12 @@ Available:
 
 - **count:** How many items to return. Valid values are numbers in the range `1 - 10`.
 
-Example:
+Examples:
 
 ```text
 api.php?r=names/count:3
+api.php?r=primes/count:7
+api.php?r=pseudohashes16/count:3
 ```
 
 ### Flags
@@ -64,29 +84,35 @@ api.php?r=names/count:3
 Example:
 
 ```text
-api.php?r=names/noid
+api.php?r=names/count:3/noid
+api.php?r=primes/count:7/noid
+api.php?r=pseudohashes16/count:3/noid
 ```
 
 ### Response
 
-The response comes as [JSON](https://json.org).
+The response comes as [JSON](https://json.org). What you want is in the `data` array.
 
 Example:
 
 ```json
 {
-    "time": 1642784073,
-    "request": "primes/count:3/noid",
+    "version": "1.0.0",
+    "time": 1642967510,
+    "request": "primes/count:3",
     "errors": [],
     "data": [
         {
-            "val": 546781
+            "id": 12554,
+            "val": 134699
         },
         {
-            "val": 950953
+            "id": 27776,
+            "val": 322073
         },
         {
-            "val": 993283
+            "id": 31546,
+            "val": 370373
         }
     ]
 }
@@ -94,9 +120,12 @@ Example:
 
 If anything goes wrong, the `error` array will have items in it and `data` will be empty.
 
+Example:
+
 ```json
 {
-    "time": 1642784103,
+    "version": "1.0.0",
+    "time": 1642967630,
     "request": "boo/count:3",
     "errors": [
         "Invalid node: boo"
@@ -104,5 +133,16 @@ If anything goes wrong, the `error` array will have items in it and `data` will 
     "data": []
 }
 ```
+
+### Rate Limits
+
+- Maximum 100 requests per 3600 seconds.
+- Minimum 1 second delay between requests.
+
+---
+
+## License
+
+Code + Data: Public Domain Worldwide
 
 ---
