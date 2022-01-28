@@ -9,6 +9,8 @@ TABLES = {
     'data_pseudohashes16': 'string',
     'data_pseudohashes32': 'string',
     'data_pseudohashes64': 'string',
+    'data_pseudoyoutubeids': 'string',
+    'data_pseudoyoutubeurls': 'string',
     'data_triangulars': 'number',
 }
 
@@ -25,7 +27,6 @@ if __name__ == '__main__':
             with open(OUTFILE, 'w') as outFile:
                 outFile.write(f'-- data for table: {table}\n')
                 outFile.write(f'-- val type: {TABLES[table]}\n')
-                outFile.write(f'-- created on: {datetime.datetime.utcnow()} UTC\n')
                 outFile.write(f'-- src: {os.path.basename(SRCFILE)}\n')
                 outFile.write(f'-- out: {os.path.basename(OUTFILE)}\n')
                 outFile.write('BEGIN TRANSACTION;\n')

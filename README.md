@@ -49,6 +49,8 @@ Available:
 - **pseudohashes16:** Pseudo hashes of length 16.
 - **pseudohashes32:** Pseudo hashes of length 32.
 - **pseudohashes64:** Pseudo hashes of length 64.
+- **pseudoyoutubeids:** Pseudo YouTube video IDs.
+- **pseudoyoutubeurls:** Pseudo YouTube video URLs.
 - **triangulars:** Triangular numbers.
 
 Examples:

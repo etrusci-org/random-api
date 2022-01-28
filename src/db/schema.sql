@@ -46,6 +46,20 @@ CREATE TABLE data_pseudohashes64 (
     val  TEXT     NOT NULL UNIQUE
 );
 
+-- Data source for pseudo youtube video ids.
+DROP TABLE IF EXISTS data_pseudoyoutubeids;
+CREATE TABLE data_pseudoyoutubeids (
+    id   INTEGER  PRIMARY KEY AUTOINCREMENT,
+    val  TEXT     NOT NULL UNIQUE
+);
+
+-- Data source for pseudo youtube video urls.
+DROP TABLE IF EXISTS data_pseudoyoutubeurls;
+CREATE TABLE data_pseudoyoutubeurls (
+    id   INTEGER  PRIMARY KEY AUTOINCREMENT,
+    val  TEXT     NOT NULL UNIQUE
+);
+
 -- Data source for triangulars.
 DROP TABLE IF EXISTS data_triangulars;
 CREATE TABLE data_triangulars (

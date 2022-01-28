@@ -17,6 +17,8 @@ $conf = array(
         'pseudohashes16', # table: data_pseudohashes16
         'pseudohashes32', # table: data_pseudohashes32
         'pseudohashes64', # table: data_pseudohashes64
+        'pseudoyoutubeids', # table: data_pseudoyoutubeids
+        'pseudoyoutubeurls', # table: data_pseudoyoutubeurls
         'triangulars', # table: data_triangulars
     ),
 
