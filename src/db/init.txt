@@ -1,0 +1,7 @@
+.read dev/db/schema.sql
+.read dev/db/data/data_names.sql
+.read dev/db/data/data_primes.sql
+.read dev/db/data/data_pseudohashes16.sql
+.read dev/db/data/data_pseudohashes32.sql
+.read dev/db/data/data_pseudohashes64.sql
+.read dev/db/data/data_triangulars.sql
