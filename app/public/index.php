@@ -21,9 +21,9 @@
     </main>
 
     <footer>
-        click anywhere to refresh
+        click to refresh
         &middot; <a href="https://github.com/etrusci-org/random-api/blob/main/README.md">README</a>
-        &middot; <a href="./api.php">Endpoint</a>
+        &middot; <a href="./api.php?r=">Endpoint</a>
     </footer>
 
     <script src="./lib/main.js" type="module"></script>
