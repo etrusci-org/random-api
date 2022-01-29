@@ -1,7 +1,7 @@
 <?php
 error_reporting(0);
 
-define('API_VERSION', '1.0.0');
+define('API_VERSION', '1.1.0');
 
 $conf = array(
     // Whether to output in plain text with additional info.
