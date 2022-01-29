@@ -69,10 +69,11 @@ body {
             }
 
     footer {
-        position: fixed;
-        bottom: 1rem;
-        right: 1rem;
-        text-align: right;
+        /* position: fixed; */
+        /* bottom: 1rem; */
+        /* right: 1rem; */
+        text-align: center;
+        margin: 3rem 0 2rem 0;
     }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
