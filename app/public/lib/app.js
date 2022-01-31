@@ -1,62 +1,55 @@
-export { App };
-const App = {
+"use strict";
+const APP = {
     conf: {
-        apiEndpointPath: './api.php',
+        apiEndpointPath: './api.php?r=',
     },
-    ui: {},
+    ui: {
+        main: document.querySelector('main'),
+        errors: document.querySelector('.errors'),
+        randomItemValue: document.querySelector('.random-item-value'),
+        randomItemInfo: document.querySelector('.random-item-info'),
+    },
     main() {
-        this.collectUIElements();
-        this.ui['main'].addEventListener('click', () => { this.refreshRandomItem(); });
-        this.ui['main'].style.display = 'flex';
+        if (!this.ui.main) {
+            return;
+        }
+        this.ui.main.addEventListener('click', (event) => {
+            event.preventDefault();
+            this.refreshRandomItem();
+        });
+        this.ui.main.style.display = 'flex';
         this.refreshRandomItem();
     },
-    collectUIElements() {
-        let elements = document.querySelectorAll('[data-uikey]');
-        elements.forEach(element => {
-            if (element instanceof HTMLElement) {
-                let uikey = element.dataset['uikey'];
-                if (uikey) {
-                    element.classList.add('ui', uikey);
-                    this.ui[uikey] = element;
-                }
-            }
-        });
-    },
     refreshRandomItem() {
-        this.ui['errors'].innerHTML = '';
-        this.ui['errors'].style.display = 'none';
-        this.apiRequest().then((response) => {
-            if (!response) {
-                return;
+        if (this.ui.errors) {
+            this.ui.errors.innerHTML = '';
+            this.ui.errors.style.display = 'none';
+        }
+        fetch(this.conf.apiEndpointPath)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('API network response was not OK.');
             }
+            return response.json();
+        })
+            .then(response => {
             if (response.errors.length > 0) {
                 console.error('API respone errors:', response.errors);
-                this.ui['errors'].innerHTML = response.errors.join('<br>');
-                this.ui['errors'].style.display = 'block';
+                if (this.ui.errors) {
+                    this.ui.errors.innerHTML = response.errors.join('<br>');
+                    this.ui.errors.style.display = 'block';
+                }
                 return;
             }
             let request = response.request;
             let val = response.data[0].val;
-            this.ui['random-item'].innerHTML = val;
-            this.ui['random-item-info'].innerHTML = `&lt;${request}&gt;`;
-        });
-    },
-    apiRequest(request = '') {
-        const requestData = new FormData();
-        requestData.append('r', request);
-        return fetch(this.conf.apiEndpointPath, {
-            method: 'POST',
-            body: requestData,
-        })
-            .then(response => {
-            if (!response.ok) {
-                throw new Error('API network response was not OK');
+            if (this.ui.randomItemInfo && this.ui.randomItemValue) {
+                this.ui.randomItemValue.innerHTML = val;
+                this.ui.randomItemInfo.innerHTML = `&lt;${request}&gt;`;
             }
-            return response.json();
         })
             .catch(error => {
-            console.error('API request error:', error);
-            this.ui['errors'].innerHTML = `API error: ${error}`;
+            console.error('There has been a problem with your fetch operation:', error);
         });
     },
 };

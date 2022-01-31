@@ -1,2 +1,4 @@
-import { App } from './app.js';
-App.main();
+"use strict";
+(() => {
+    APP.main();
+})();
