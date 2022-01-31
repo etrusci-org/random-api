@@ -2,27 +2,23 @@
 
 Retrieve curated random data.
 
-If you just want to read some random data, go to <https://etrusci.org/tool/random-api>. For accessing the API programmatically, read the [Usage](#usage) section.
+If you just want to read some random data, go to <https://etrusci.org/tool/random-api>. For accessing the API programmatically, read below.
 
----
-
-- [Usage](#usage)
-  - [Endpoint](#endpoint)
-  - [Request Syntax](#request-syntax)
+- [Endpoint](#endpoint)
+- [Parameters](#parameters)
+  - [Syntax](#syntax)
   - [Nodes](#nodes)
   - [Vars](#vars)
   - [Flags](#flags)
-  - [Response](#response)
-  - [Rate Limits](#rate-limits)
+- [Response](#response)
+- [Rate Limits](#rate-limits)
 - [License](#license)
 
 ---
 
-## Usage
+## Endpoint
 
-### Endpoint
-
-Every request begins with this URL. By default this returns one random item from a random **node**. You can send requests as both `GET` or `POST`.
+Every request begins with this URL. You can send requests as both `GET` or `POST`.
 
 ```text
 https://etrusci.org/tool/random-api/api.php?r=
@@ -30,7 +26,15 @@ https://etrusci.org/tool/random-api/api.php?r=
 
 For simplicity, this is shortened to just `api.php?r=` in the following texts.
 
-### Request Syntax
+---
+
+## Parameters
+
+If you set no parameters, the API will return one random item from a random **node**.
+
+**Nodes** always come first in the query string and thus are required if you want to also set **vars** or **flags**.
+
+### Syntax
 
 **Nodes**, **vars** and **flags** are always separated with `/`.
 
@@ -40,18 +44,16 @@ api.php?r=[node][/vars][/flags]
 
 ### Nodes
 
-**Nodes** define the data source. They always come first in the query string and thus are required if you want to set **vars** or **flags**.
-
-Available:
-
-- **names:** Entity names.
-- **primes:** Prime numbers.
-- **pseudohashes16:** Pseudo hashes of length 16.
-- **pseudohashes32:** Pseudo hashes of length 32.
-- **pseudohashes64:** Pseudo hashes of length 64.
-- **pseudoyoutubeids:** Pseudo YouTube video IDs.
-- **pseudoyoutubeurls:** Pseudo YouTube video URLs.
-- **triangulars:** Triangular numbers.
+| Node              | Description                |
+|-------------------|----------------------------|
+| names             | Entity names               |
+| primes            | Prime numbers              |
+| pseudohashes16    | Pseudo hashes of length 16 |
+| pseudohashes32    | Pseudo hashes of length 32 |
+| pseudohashes64    | Pseudo hashes of length 64 |
+| pseudoyoutubeids  | Pseudo YouTube video IDs   |
+| pseudoyoutubeurls | Pseudo YouTube video URLs  |
+| triangulars       | Triangular numbers         |
 
 Examples:
 
@@ -63,82 +65,84 @@ api.php?r=pseudohashes16
 
 ### Vars
 
-All **nodes** accept the same **vars**. You can not have them without having a **node** set. They are always `key:value` pairs.
-
-Available:
-
-- **count:** How many items to return. Valid values are numbers in the range `1 - 10`.
+| Var   | Description                 | Valid Values | Default |
+|-------|-----------------------------|--------------|---------|
+| count | number of items to return   | `1` - `10`   | `1`     |
 
 Examples:
 
 ```text
-api.php?r=names/count:3
+api.php?r=names/count:10
 api.php?r=primes/count:7
 api.php?r=pseudohashes16/count:3
 ```
 
 ### Flags
 
-**Flags** are single values that can toggle something on or off.
+| Flag | Description                            |
+|------|----------------------------------------|
+| noid | Ommit the item ID in the response data |
 
-Available:
-
-- **noid:** Omit the `id` value from the response data.
-
-Example:
+Examples:
 
 ```text
-api.php?r=names/count:3/noid
+api.php?r=names/count:10/noid
 api.php?r=primes/count:7/noid
 api.php?r=pseudohashes16/count:3/noid
 ```
 
-### Response
+---
+
+## Response
 
 The response comes as [JSON](https://json.org). What you want is in the `data` array.
 
 Example:
 
 ```json
+// GET api.php?r=names/count:3
 {
-    "version": "1.0.0",
-    "time": 1642967510,
-    "request": "primes/count:3",
+    "version": "1.1.0",
+    "time": 1643639966,
+    "request": "names/count:3",
     "errors": [],
     "data": [
         {
-            "id": 12554,
-            "val": 134699
+            "id": 19180,
+            "val": "Copulating Leslie Bartles"
         },
         {
-            "id": 27776,
-            "val": 322073
+            "id": 29818,
+            "val": "Elberta Mosiman"
         },
         {
-            "id": 31546,
-            "val": 370373
+            "id": 52918,
+            "val": "Kathryn Hazekamp Of Forksville"
         }
     ]
 }
 ```
 
-If anything goes wrong, the `error` array will have items in it and `data` will be empty.
+If anything goes wrong, the `error` array should have items in it and `data` will be empty.
 
 Example:
 
 ```json
+// GET api.php?r=count:3
 {
-    "version": "1.0.0",
-    "time": 1642967630,
-    "request": "boo/count:3",
+    "version": "1.1.0",
+    "time": 1643639784,
+    "request": "count:3",
     "errors": [
-        "Invalid node: boo"
+        "Invalid node: count:3"
     ],
     "data": []
 }
 ```
 
-### Rate Limits
+---
+
+## Rate Limits
 
 - Maximum 100 requests per 3600 seconds.
 - Minimum 1 second delay between requests.
