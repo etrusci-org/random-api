@@ -12,20 +12,21 @@
 
     <noscript>This app needs JavaScript to work.</noscript>
 
-    <main data-uikey="main">
-        <div data-uikey="random-item-wrap">
-            <div data-uikey="errors"></div>
-            <div data-uikey="random-item">?</div>
-            <div data-uikey="random-item-info">&lt;?&gt;</div>
+    <main>
+        <div class="random-item-wrap">
+            <div class="errors"></div>
+            <div class="random-item-value">?</div>
+            <div class="random-item-info">&lt;?&gt;</div>
         </div>
     </main>
 
     <footer>
         click to refresh
-        &middot; <a href="https://github.com/etrusci-org/random-api/blob/main/README.md">README</a>
+        &middot; <a href="https://github.com/etrusci-org/random-api/blob/main/README.md" target="_blank">README</a>
         &middot; <a href="./api.php?r=">Endpoint</a>
     </footer>
 
-    <script src="./lib/main.js" type="module"></script>
+    <script src="./lib/app.js"></script>
+    <script src="./lib/main.js"></script>
 </body>
 </html>

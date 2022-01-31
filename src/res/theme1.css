@@ -22,7 +22,7 @@ body {
     font-weight: 400;
 }
 
-div.random-item {
+div.random-item-value {
     font-size: 5rem;
 }
 
@@ -43,16 +43,16 @@ body {
 
     main {
         height: 100%;
-        display: none; /* will be set to 'flex' in App.main */
+        display: none; /* will be set to 'flex' in APP.main */
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        text-align: center;
     }
 
         div.random-item-wrap {
             width: 100%;
             overflow-wrap: break-word;
-            text-align: center;
         }
 
             div.errors {
@@ -60,7 +60,7 @@ body {
                 padding: 2rem 2rem .5rem 2rem;
             }
 
-            div.random-item {
+            div.random-item-value {
                 padding: 0 2rem .5rem 2rem;
             }
 
@@ -69,9 +69,6 @@ body {
             }
 
     footer {
-        /* position: fixed; */
-        /* bottom: 1rem; */
-        /* right: 1rem; */
         text-align: center;
         margin: 3rem 0 2rem 0;
     }
@@ -98,6 +95,6 @@ div.errors {
     color: #da652f;
 }
 
-div.random-item {
+div.random-item-value {
     color: #2fdaaf;
 }

@@ -1,4 +1,8 @@
-import { App } from './app.js'
+(() => {
+    APP.main()
+})()
 
 
-App.main()
+
+// import { App } from './app.js'
+// App.main()
