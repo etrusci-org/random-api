@@ -149,8 +149,4 @@ Example:
 
 ---
 
-## License
-
-Code + Data: Public Domain Worldwide
-
----
+[LICENSE](LICENSE.md)
