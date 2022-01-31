@@ -2,8 +2,8 @@
 
 ## v1.1.0 - 2022-01-29
 
-- Added data source pseudoyoutubeids
-- Added data source pseudoyoutubeurls
+- Added node: pseudoyoutubeids
+- Added node: pseudoyoutubeurls
 
 ## v1.0.0 - 2022-01-24
 
