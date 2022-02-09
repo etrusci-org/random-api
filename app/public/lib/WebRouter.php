@@ -1,16 +1,32 @@
 <?php
+/**
+ * URL query string parser for the lazy.
+ *
+ * The idea is to provide a syntax for generating and reading your web app routes.
+ * It's hard sometimes doing this with individual query string variables. With this
+ * approach you'll have all the needed data in an array ready to use.
+ *
+ * @example WebRouter.example.php
+ */
 class WebRouter {
     public $requestSource = 'get+post';
     public $requestKey = 'r';
     public $defaultRoute = array(
-        'time' => NULL,
-        'request'=> NULL,
-        'node' => NULL,
+        'time' => null,
+        'request'=> null,
+        'node' => 'index',
         'var' => array(),
         'flag' => array(),
     );
 
-    public function parseRoute($array=NULL, $sort=TRUE) {
+    /**
+     * Parse current or custom route.
+     *
+     * @param array $array=null  Custom route array.
+     * @param bool $sort=true  Whether to sort the route contents.
+     * @return array  Parsed route.
+     */
+    public function parseRoute(array $array=null, bool $sort=true): array {
         $route = $this->defaultRoute;
         $route['time'] = time();
 
@@ -32,10 +48,10 @@ class WebRouter {
         }
 
         if (!$array) {
-            $request = array_key_exists($this->requestKey, $requestData) ? $requestData[$this->requestKey] : NULL;
+            $request = array_key_exists($this->requestKey, $requestData) ? $requestData[$this->requestKey] : '';
         }
         else {
-            $request = array_key_exists($this->requestKey, $array) ? $array[$this->requestKey] : NULL;
+            $request = array_key_exists($this->requestKey, $array) ? $array[$this->requestKey] : '';
         }
 
         $route['request'] = trim($request);
@@ -46,7 +62,7 @@ class WebRouter {
 
         $dump = explode('/', $request, 2);
 
-        $route['node'] = count($dump) > 0 ? $dump[0] : NULL;
+        $route['node'] = count($dump) > 0 ? $dump[0] : '';
 
         if (count($dump) > 1) {
             $dump = explode('/', $dump[1]);
@@ -66,8 +82,8 @@ class WebRouter {
         }
 
         if ($sort) {
-            asort($route['var']);
-            asort($route['flag']);
+            ksort($route['var']);
+            sort($route['flag']);
         }
 
         // var_dump($route);
