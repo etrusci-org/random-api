@@ -1,7 +1,9 @@
 <?php
-require __DIR__.'/router.php';
-require __DIR__.'/db.php';
-require __DIR__.'/helper.php';
+require __DIR__.'/WebRouter.php';
+require __DIR__.'/DatabaseSQLite3.php';
+require __DIR__.'/clientIP.php';
+require __DIR__.'/jenc.php';
+require __DIR__.'/jdec.php';
 
 
 class RandomAPI {
@@ -26,7 +28,7 @@ class RandomAPI {
         // Parse route.
         $this->Router = new WebRouter();
         $this->route = $this->Router->parseRoute();
-        if (!$this->route['node']) {
+        if ($this->route['node'] == 'index') {
             $this->route = $this->Router->parseRoute(array('r' => $this->conf['validNodes'][array_rand($this->conf['validNodes'])]));
         }
         $this->response['time'] = $this->route['time'];
@@ -39,7 +41,7 @@ class RandomAPI {
         }
 
         // Save client IP as hash.
-        $clientIP = getClientIP();
+        $clientIP = clientIP();
         if ($clientIP) {
             $this->clientHash = hash('ripemd160', $clientIP);
         }
